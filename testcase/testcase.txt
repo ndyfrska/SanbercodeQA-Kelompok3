@@ -1,1 +1,4 @@
-
+1. Signup
+2. Login, logout
+3. Dashboard
+4. CRUD
