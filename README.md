@@ -1,2 +1,5 @@
 # Final-Project-Kelompok-3-
-Repository untuk menyimpan final project sanbercode
+Nadya Friska
+Sovia Dumiyanti
+Faizal Bayhaque Al Adhanie
+Dwi Febri Murcahyo
