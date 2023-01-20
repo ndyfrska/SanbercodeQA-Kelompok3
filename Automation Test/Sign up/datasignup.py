@@ -5,67 +5,94 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-import dataSignUp
+   
+def Positive(driver):
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'FirstName').send_keys('1')
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Username').send_keys('draco')
+    driver.find_element(By.ID,'Password').send_keys('1')
+    driver.find_element(By.ID,'ConfirmPassword').send_keys('1')
 
-class TestSignUp(unittest.TestCase):
+def Negative1(driver): #Username already exist
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'FirstName').send_keys('1')
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Username').send_keys('16')
+    driver.find_element(By.ID,'Password').send_keys('1')
+    driver.find_element(By.ID,'ConfirmPassword').send_keys('1')
 
-    def setUp(self):
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+def Negative2(driver): #Not input surname
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'FirstName').send_keys('1')
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Password').send_keys('1')
+    driver.find_element(By.ID,'ConfirmPassword').send_keys('1')
 
-    def test_Sign_Up_Positive(self):
-        driver = self.driver
-        dataSignUp.Positive(driver)
-        driver.find_element(By.ID,'submit').click()
+def Negative3(driver): #Not input firstname
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Username').send_keys('16')
+    driver.find_element(By.ID,'Password').send_keys('1')
+    driver.find_element(By.ID,'ConfirmPassword').send_keys('1')
+        
+def Negative4(driver): #Not input username
+        driver.get("https://itera-qa.azurewebsites.net/")
+        driver.maximize_window()
+        time.sleep(2)
+        driver.find_element(By.LINK_TEXT,"Sign Up").click()
+        time.sleep(3)
+        driver.find_element(By.ID,'FirstName').send_keys('1')
+        driver.find_element(By.ID,'Surname').send_keys('1')
+        driver.find_element(By.ID,'E_post').send_keys('1')
+        driver.find_element(By.ID,'Mobile').send_keys('1')
 
-        response_message = driver.find_element(By.CLASS_NAME,'label-success').text
-        self.assertEqual(response_message, 'Registration Successful')
+def Negative5(driver): #Not input password
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'FirstName').send_keys('1')
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Username').send_keys('16')   
 
-    def test_Sign_Up_Negative(self): #User has already exist
-        driver = self.driver
-        dataSignUp.Negative1(driver)
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.CLASS_NAME,'label-danger').text
-        self.assertEqual(response_message, 'Username already exist')
-
-    def test_Sign_Up_Negative(self): #Not input surname
-        driver = self.driver
-        dataSignUp.Negative2(driver)
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.ID,'Surname-error').text
-        self.assertEqual(response_message, 'Please enter surname')
-
-    def test_Sign_Up_Negative(self): #Not input firstname
-        driver = self.driver
-        dataSignUp.Negative3(driver)
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.ID,'FirstName-error').text
-        self.assertEqual(response_message, 'Please enter first name')
-    
-    def test_Sign_Up_Negative(self): #Not input username
-        driver = self.driver
-        dataSignUp.Negative4(driver) 
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.CLASS_NAME,'Username-error').text
-        self.assertEqual(response_message, 'Please enter username')
-    
-    def test_Sign_Up_Negative(self): #Not input password
-        driver = self.driver
-        dataSignUp.Negative5(driver)
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.CLASS_NAME,'Password-error').text
-        self.assertEqual(response_message, 'Please enter password')
-
-    def test_Sign_Up_Negative(self): #Confirm password and password not match
-        driver = self.driver
-        dataSignUp.Negative6(driver)
-        driver.find_element(By.ID,'submit').click()
-
-        response_message = driver.find_element(By.ID,'ConfirmPassword-error').text
-        self.assertEqual(response_message, "'Confirm password' and 'Password' do not match.")
-
-unittest.main()
+def Negative6(driver): #Confirm password and password not match
+    driver.get("https://itera-qa.azurewebsites.net/")
+    driver.maximize_window()
+    time.sleep(2)
+    driver.find_element(By.LINK_TEXT,"Sign Up").click()
+    time.sleep(3)
+    driver.find_element(By.ID,'FirstName').send_keys('1')
+    driver.find_element(By.ID,'Surname').send_keys('1')
+    driver.find_element(By.ID,'E_post').send_keys('1')
+    driver.find_element(By.ID,'Mobile').send_keys('1')
+    driver.find_element(By.ID,'Username').send_keys('888')
+    driver.find_element(By.ID,'Password').send_keys('1')
+    driver.find_element(By.ID,'ConfirmPassword').send_keys('2')
